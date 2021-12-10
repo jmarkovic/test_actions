@@ -11,4 +11,6 @@ jobs:
         uses: actions/github-script@v5
         id: results
         with:
-          script: console.log(context)
+          script: |
+            console.log(context)
+            console.log(github)
