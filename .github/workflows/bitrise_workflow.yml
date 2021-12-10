@@ -13,4 +13,8 @@ jobs:
         with:
           script: |
             const result = await github.request("${{ github.event.issue.pull_request.url }}")
-            print(result)
+            return result
+      
+      - name: Get result
+        run: |
+          echo "${{ fromJson(steps.results.outputs.result) }}"
