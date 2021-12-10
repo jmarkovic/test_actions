@@ -8,9 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print data from context
-        uses: actions/github-script@v5
         id: results
-        with:
-          script: |
-            console.log(github.context)
-          result-encoding: string
+        run: |
+          console.log(github.context)
