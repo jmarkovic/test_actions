@@ -12,5 +12,6 @@ jobs:
         id: results
         with:
           script: |
-            console.log(context)
-            console.log(github)
+            const diff_url = context.payload.pull_request.diff_url
+            const result = await github.request(diff_url)
+            console.log(result)
