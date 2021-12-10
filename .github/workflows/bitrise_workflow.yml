@@ -10,4 +10,4 @@ jobs:
       - name: Print data from context
         id: results
         run: |
-          console.log(github.context)
+          console.log("${{github.context}}")
