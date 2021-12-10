@@ -12,6 +12,7 @@ jobs:
         id: results
         with:
           script: |
+            echo "${{ JSON.stringify(github, null, 2) }}"
             const result = await github.request("${{ github.event.issue.pull_request.url }}")
             return result
       
