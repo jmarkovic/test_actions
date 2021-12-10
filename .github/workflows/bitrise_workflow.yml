@@ -12,7 +12,8 @@ jobs:
         id: results
         with:
           script: |
-            echo "${{ github.event }}"
+            echo "${{ github.event.issue.pull_request }}"
+            echo "${{ github.event.issue.pull_request.toStrong() }}"
             const result = await github.request("${{ github.event.issue.pull_request.url }}")
             return result
       
