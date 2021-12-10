@@ -9,4 +9,4 @@ jobs:
     steps:
       - name: Print data from context
         run: |
-          echo "${{ github }}"
+          echo "${{ github.head_ref }}"
