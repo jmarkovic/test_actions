@@ -14,7 +14,10 @@ jobs:
           script: |
             const result = await github.request("${{ github.event.issue.pull_request.url }}")
             return result
+          result-encoding: json
       
       - name: Get result
         run: |
-          echo "${{ steps.results.outputs.result }}"
+          echo "::set-output name=branch::${{fromJson(steps.github-result.outputs.result).ref}}"
+          echo "::set-output name=sha::${{fromJson(steps.github-result.outputs.result).sha}}"
+          echo "::set-output name=pr_number::${{fromJson(steps.github-result.outputs.result).number}}"
