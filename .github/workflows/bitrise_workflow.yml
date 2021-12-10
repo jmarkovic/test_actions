@@ -1,0 +1,31 @@
+name: Work already
+
+on: issue_comment
+jobs:
+  pr_commented:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v5
+        id: github-result
+        with:
+          script: |
+            const result = await github.request("${{ github.event.issue.pull_request.url }}")
+            return result.data.head
+          result-encoding: json
+
+      - name: Get result
+        id: pr-result
+        run: |
+          echo "::set-output name=branch::${{fromJson(steps.github-result.outputs.result).ref}}"
+          echo "::set-output name=sha::${{fromJson(steps.github-result.outputs.result).sha}}"
+          echo "::set-output name=pr_number::${{fromJson(steps.github-result.outputs.result).number}}"
+
+      - name: Comment
+        run: |
+          COMMENT_ORIG="${{ github.event.comment.body }}"
+          echo "$COMMENT_ORIG"
+          BRANCH="${{ steps.pr-result.outputs.branch }}"
+          HASH="${{ steps.pr-result.outputs.sha }}"
+          PR_NUMB="${{ steps.pr-result.outputs.sha }}""
+          APP_SLUG="${{ secrets.BITRISE_APP_SLUG }}"
+          BUILD_TRIGGER_TOKEN=${{ secrets.BITRISE_BUILD_TRIGGER_TOKEN }}
