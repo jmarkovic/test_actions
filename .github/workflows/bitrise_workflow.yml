@@ -12,5 +12,5 @@ jobs:
         id: results
         with:
           script: |
-            console.log(github.event)
+            console.log(github.context)
           result-encoding: string
