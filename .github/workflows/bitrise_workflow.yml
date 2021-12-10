@@ -8,5 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print data from context
-        run: |
-          echo "${{ github.head_ref }}"
+        uses: actions/github-script@v5
+        id: results
+        with:
+          script: |
+            echo "${{ github.event.issue.pull_request }}"
