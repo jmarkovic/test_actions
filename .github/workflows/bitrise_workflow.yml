@@ -17,4 +17,4 @@ jobs:
       
       - name: Get result
         run: |
-          echo "${{ fromJson(steps.results.outputs.result) }}"
+          echo "${{ steps.results.outputs.result }}"
