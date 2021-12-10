@@ -1,0 +1,33 @@
+# Listens for PR comments and triggers the selected Bitrise workflow
+name: action_bitrise_workflow
+
+# Triggered when a comment is written on Issues/PRs
+on: push
+jobs:
+  pr_commented:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v5
+        id: github-result
+        with:
+          script: |
+            const result = await github.request("${{ github.event.issue.pull_request.url }}")
+            return result.data.head
+          result-encoding: json
+
+      - name: Get result
+        id: pr-result
+        run: |
+          echo "::set-output name=branch::${{fromJson(steps.github-result.outputs.result).ref}}"
+          echo "::set-output name=sha::${{fromJson(steps.github-result.outputs.result).sha}}"
+          echo "::set-output pr_number::${{fromJson(steps.github-result.outputs.result).number}}"
+
+      - name: PR comment
+        run: |
+          BRANCH="${{ steps.pr-result.outputs.branch }}"
+          HASH="${{ steps.pr-result.outputs.sha }}"
+          PR_NUMBER="${{ steps.pr-result.outputs.pr_number }}"
+
+          echo "branch $BRANCH"
+          echo "hash $HASH"
+          echo ""
