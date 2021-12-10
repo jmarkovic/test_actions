@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v5
+        name: "Query the pull request"
         id: github-result
         with:
           script: |
