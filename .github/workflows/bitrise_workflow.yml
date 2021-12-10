@@ -16,3 +16,6 @@ jobs:
             return result
           result-encoding: json
       
+      - name: Get result
+        run: |
+          echo "${{fromJson(steps.github-result.outputs.result)}}"
