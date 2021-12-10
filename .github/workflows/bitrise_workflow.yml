@@ -4,30 +4,9 @@ name: action_bitrise_workflow
 # Triggered when a comment is written on Issues/PRs
 on: push
 jobs:
-  pr_commented:
+  dump_data:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v5
-        name: "Query the pull request"
-        id: github-result
-        with:
-          script: |
-            const result = await github.request("${{ github.event.issue.pull_request.url }}")
-            return result.data.head
-          result-encoding: json
-
-      - name: Get result
-        id: pr-result
+      - name: Print data from context
         run: |
-          echo "::set-output name=branch::${{fromJson(steps.github-result.outputs.result).ref}}"
-          echo "::set-output name=sha::${{fromJson(steps.github-result.outputs.result).sha}}"
-
-      - name: PR comment
-        run: |
-          BRANCH="${{ steps.pr-result.outputs.branch }}"
-          HASH="${{ steps.pr-result.outputs.sha }}"
-          PR_NUMBER="${{ steps.pr-result.outputs.pr_number }}"
-
-          echo "branch $BRANCH"
-          echo "hash $HASH"
-          echo "pr_numb $PR_NUMBER"
+          echo "{{ github }}"
