@@ -20,7 +20,7 @@ jobs:
         run: |
           echo "::set-output name=branch::${{fromJson(steps.github-result.outputs.result).ref}}"
           echo "::set-output name=sha::${{fromJson(steps.github-result.outputs.result).sha}}"
-          echo "::set-output pr_number::${{fromJson(steps.github-result.outputs.result).number}}"
+          # echo "::set-output pr_number::${{fromJson(steps.github-result.outputs.result).number}}"
 
       - name: PR comment
         run: |
@@ -30,4 +30,4 @@ jobs:
 
           echo "branch $BRANCH"
           echo "hash $HASH"
-          echo ""
+          echo "pr_numb $PR_NUMBER"
